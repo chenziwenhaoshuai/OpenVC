@@ -30,7 +30,7 @@ DEFAULT_SETTINGS = {
 
 
 class Controller:
-    """Single source of truth for the HTTP layer and the SSE stream."""
+    """Single source of truth for the UI: settings, voices and the live engine."""
 
     def __init__(self) -> None:
         paths.ensure_dirs()

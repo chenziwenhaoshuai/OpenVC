@@ -145,7 +145,7 @@ foreach ($d in 'voices', 'assets') {
 Remove-Item -Recurse -Force (Join-Path $out 'data') -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Force -Path (Join-Path $out 'data') | Out-Null
 Copy-Item -Force (Join-Path $root '使用说明.txt') $out -ErrorAction SilentlyContinue
-Copy-Item -Force (Join-Path $root 'README_APP.md') $out -ErrorAction SilentlyContinue
+Copy-Item -Force (Join-Path $root 'README.md') $out -ErrorAction SilentlyContinue
 
 & (Join-Path $rt 'python.exe') -m compileall -q -j 0 (Join-Path $out 'app') 2>&1 | Out-Null
 

@@ -75,7 +75,7 @@ Set-Content (Join-Path $drv '来源.txt') -Value "VB-CABLE Virtual Audio Device`
 
 # --- 文档 ---
 Copy-Item -Force (Join-Path $root '使用说明.txt') $rel -ErrorAction SilentlyContinue
-Copy-Item -Force (Join-Path $root 'README_APP.md') $rel -ErrorAction SilentlyContinue
+Copy-Item -Force (Join-Path $root 'README.md') $rel -ErrorAction SilentlyContinue
 
 $size = (Get-ChildItem $rel -Recurse -File | Measure-Object Length -Sum).Sum / 1MB
 Write-Host ''

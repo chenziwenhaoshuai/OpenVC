@@ -204,15 +204,3 @@ class VoiceBank:
                 p.unlink()
                 hit = True
         return hit
-
-    def rename(self, voice_id: str, name: str) -> dict:
-        p = self.dir / f"{voice_id}.json"
-        meta = json.loads(p.read_text("utf-8"))
-        meta["name"] = name
-        p.write_text(json.dumps(meta, ensure_ascii=False, indent=2), "utf-8")
-        return self.get(voice_id)
-
-
-
-
-

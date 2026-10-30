@@ -6,15 +6,13 @@ only renders its state and forwards user actions.
 """
 from __future__ import annotations
 
-import threading
-import time
 import traceback
 from typing import Callable, Optional
 
-from PySide6.QtCore import QEventLoop, QSize, Qt, QThread, QTimer, Signal
-from PySide6.QtGui import QColor, QFont, QIcon, QPainter, QPen, QPixmap
+from PySide6.QtCore import QEventLoop, Qt, QThread, QTimer, Signal
+from PySide6.QtGui import QColor, QIcon, QPainter, QPen
 from PySide6.QtWidgets import (
-    QApplication, QCheckBox, QComboBox, QDialog, QFileDialog, QFrame,
+    QApplication, QCheckBox, QComboBox, QFileDialog, QFrame,
     QHBoxLayout, QLabel, QLineEdit, QMessageBox, QPlainTextEdit, QPushButton,
     QProgressDialog, QScrollArea, QSizePolicy, QSlider, QToolButton,
     QVBoxLayout, QWidget,

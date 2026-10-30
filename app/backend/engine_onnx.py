@@ -64,10 +64,6 @@ class OnnxBundle:
     def block_size(self) -> int:
         return BLOCK_SIZE
 
-    @property
-    def min_bn_len(self) -> int:
-        return CHUNK_SIZE + BLOCK_SIZE
-
 
 def _session(path: Path, threads: int) -> ort.InferenceSession:
     opts = ort.SessionOptions()
