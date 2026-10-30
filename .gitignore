@@ -1,0 +1,16 @@
+# 开发环境与产物
+.venv/
+dist-portable/
+release/
+__pycache__/
+*.pyc
+*.res
+
+# 模型与二进制（用 download_models.ps1 / build_denoise.ps1 生成）
+onnx/
+denoise/df.dll
+denoise/DeepFilterNet3_onnx.tar.gz
+packaging/python-embed.zip
+
+# 运行期状态
+data/

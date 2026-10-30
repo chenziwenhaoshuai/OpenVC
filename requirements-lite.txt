@@ -1,0 +1,6 @@
+numpy
+onnxruntime
+PySide6-Essentials
+sounddevice
+soundfile
+soxr

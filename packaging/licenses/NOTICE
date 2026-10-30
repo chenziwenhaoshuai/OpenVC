@@ -1,0 +1,71 @@
+MeanVC2-ONNX
+ONNX exports of MeanVC2 for streaming inference, by kiarina.
+
+This repository contains converted weights. The conversion changes the
+format (and, for the *.int8.onnx files, quantizes MatMul/Gemm weights to
+int8); it does not retrain anything. Each part keeps the license of the work
+it was converted from.
+
+------------------------------------------------------------------------
+1. Conversion graphs: fbank.onnx, asr*.onnx, gtm.onnx, dit*.onnx, vocos*.onnx
+   License: Apache License 2.0 (licenses/Apache-2.0.txt)
+------------------------------------------------------------------------
+
+MeanVC2: Robust Low-Latency Streaming Zero-Shot Voice Conversion
+Guobin Ma, Yuxuan Xia, Yuepeng Jiang, Dake Guo, Hanke Xie, Jingbin Hu,
+Yanbo Wang, Lei Xie, Pengcheng Zhu (ASLP@NPU and collaborators)
+  Code:    https://github.com/ASLP-lab/MeanVC2
+           (commit 13acf84c1bf135ea5edad9c245b345289b06b33e; the README
+           states Apache-2.0, the repository has no LICENSE file)
+  Weights: https://huggingface.co/ASLP-lab/MeanVC2
+           (revision 39cdd19522fe896c227da691314d9a0e3b995486,
+           license: apache-2.0)
+
+From that Hugging Face repository:
+  - meanvc2_120ms_40ms.safetensors -> dit.onnx, dit.int8.onnx, gtm.onnx
+  - fastu2pp_160ms.pt (Fast-U2++ streaming ASR encoder, WeNet architecture)
+                                    -> asr.onnx, asr.int8.onnx
+    Only the embedding and the first 6 of the 12 encoder layers that the
+    streaming path uses are in the graph.
+  - vocos.pt (Vocos vocoder, 16 kHz) -> vocos.onnx, vocos.int8.onnx
+    The inverse STFT is rewritten as matrix products and a transposed
+    convolution.
+
+fbank.onnx computes the Kaldi-compatible log-mel features that upstream gets
+from torchaudio.compliance.kaldi.fbank (the mel filter bank values come from
+torchaudio, BSD-2-Clause, https://github.com/pytorch/audio).
+
+Architectures:
+  - Vocos, Copyright (c) 2023 Charactr Inc., MIT License
+    (licenses/MIT-Vocos.txt), https://github.com/gemelo-ai/vocos
+  - WeNet (Fast-U2++), Apache License 2.0, https://github.com/wenet-e2e/wenet
+  - F5-TTS (DiT backbone that MeanVC2 builds on), https://github.com/SWivid/F5-TTS
+
+------------------------------------------------------------------------
+2. Speaker encoder: speaker/speaker.onnx, speaker/speaker.int8.onnx
+   License: Creative Commons Attribution-ShareAlike 3.0 Unported
+   (licenses/CC-BY-SA-3.0-UniSpeech.txt). NOT Apache-2.0.
+------------------------------------------------------------------------
+
+WavLM-Large + ECAPA-TDNN speaker verification model fine-tuned by Microsoft,
+the checkpoint the MeanVC2 code uses for reference voices
+(wavlm_large_finetune.pth, published in microsoft/UniSpeech:
+https://github.com/microsoft/UniSpeech/tree/main/downstreams/speaker_verification,
+repository license CC BY-SA 3.0).
+
+  - WavLM-Large, Copyright (c) Microsoft Corporation, MIT License
+    (licenses/MIT-WavLM.txt), https://github.com/microsoft/unilm/tree/master/wavlm
+    (weights from https://huggingface.co/s3prl/converted_ckpts,
+    revision 8cad0b370e7e35f8d56951d95d2be036ea85510c)
+  - WavLM model code from s3prl, Apache License 2.0,
+    https://github.com/s3prl/s3prl (commit ec8064b5889f81ca460fbe2c094ce576a6f120b7)
+  - ECAPA-TDNN model code from the MeanVC2 repository
+    (preprocess/models/ecapa_tdnn.py)
+
+Changes: exported to ONNX for one waveform at a time (the same hidden states
+and layer weighting as upstream); speaker.int8.onnx quantizes MatMul/Gemm
+weights to int8. These modified files are distributed under CC BY-SA 3.0.
+
+------------------------------------------------------------------------
+
+No endorsement by the original authors is implied.

@@ -1,0 +1,25 @@
+﻿DeepFilterNet3 降噪组件
+========================================
+
+代码: https://github.com/Rikorose/DeepFilterNet
+作者: Hendrik Schröter (Rikorose)
+许可: MIT / Apache-2.0 双许可（见 licenses/）
+
+本目录内容：
+  df.dll                      由官方 libDF 编译而成（capi 特性，tract 推理）
+  DeepFilterNet3_onnx.tar.gz  官方预训练模型（enc/erb_dec/df_dec 三个 ONNX 图）
+
+编译方式（与官方源码一致，仅调整了构建配置）：
+  cargo build --release --features capi
+  - 去掉了 default-model 特性：模型改为运行时从 tar.gz 加载，
+    这样同一个 dll 可以换模型，也避免把 7.6 MB 模型重复打进二进制。
+  - 开启了 strip，体积从 38.7 MB 降到 27.8 MB。
+
+为什么不用 Python 版：
+  官方 Python 实现依赖 PyTorch（约 1.9 GB）。libDF 是同一个作者用 Rust
+  实现的等价库，直接给出 C 接口，无需 PyTorch，也不会因为重新实现
+  STFT / ERB / 深滤波而引入偏差。
+
+采样率说明：
+  DeepFilterNet3 工作在 48 kHz 全频带。本程序内部是 16 kHz，
+  因此在送入降噪前后各做一次重采样（soxr，流式、保持状态）。
