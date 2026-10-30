@@ -17,6 +17,8 @@
 
 到 [**Releases**](https://github.com/chenziwenhaoshuai/OpenVC/releases) 下载 `OpenVC-1.0.0.zip`（170 MB），解压到任意位置（**不要放 Program Files**）。
 
+> 包里的模型全部来自第三方开源项目，确切的下载地址、大小与许可证见 [**SOURCES.md**](SOURCES.md)。
+
 ## 三步开始
 
 1. **装驱动**：解压 `驱动\VBCABLE_Driver_Pack45.zip`，右键 `VBCABLE_Setup_x64.exe` → 以管理员身份运行 → Install Driver → **重启电脑**
@@ -158,7 +160,8 @@ OpenVC/
 - [Vocos](https://github.com/charactr-platform/vocos) · [WeNet](https://github.com/wenet-e2e/wenet)
 - [VB-CABLE](https://vb-audio.com/Cable/) — 虚拟声卡
 
-许可证详情见 [THIRD_PARTY.md](THIRD_PARTY.md)。
+每个文件从哪下载、多大、什么许可证：[**SOURCES.md**](SOURCES.md)
+第三方组件完整清单：[**THIRD_PARTY.md**](THIRD_PARTY.md)
 
 ## 合规提醒
 

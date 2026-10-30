@@ -21,7 +21,23 @@ $rt = Join-Path $out 'runtime'
 $embed = Join-Path $root 'packaging\python-embed.zip'
 $onnx_src = Join-Path $root 'onnx'
 
-if (-not (Test-Path $embed)) { throw "缺少 $embed，请先下载 python-3.11.9-embed-amd64.zip" }
+if (-not (Test-Path $embed)) {
+    # Official embeddable CPython, fetched on demand so a fresh clone can build.
+    Write-Host '=== 0/5 下载内嵌 Python ===' -ForegroundColor Cyan
+    $pyMirrors = @(
+        'https://www.python.org/ftp/python/3.11.9/python-3.11.9-embed-amd64.zip',
+        'https://mirrors.huaweicloud.com/python/3.11.9/python-3.11.9-embed-amd64.zip'
+    )
+    New-Item -ItemType Directory -Force -Path (Split-Path $embed) | Out-Null
+    $got = $false
+    foreach ($u in $pyMirrors) {
+        Write-Host ("  [get ] python-3.11.9-embed-amd64.zip <- {0}" -f ([uri]$u).Host)
+        & curl.exe -sL --max-time 600 -o $embed $u
+        if ((Test-Path $embed) -and ((Get-Item $embed).Length -gt 5MB)) { $got = $true; break }
+    }
+    if (-not $got) { throw "下载 python-3.11.9-embed-amd64.zip 失败" }
+    Write-Host ("  -> {0:N1} MB" -f ((Get-Item $embed).Length/1MB))
+}
 if (-not (Test-Path $onnx_src)) { throw "缺少 onnx/ 目录，请先运行 download_models.ps1" }
 
 Write-Host '=== 1/5 解压内嵌 Python ===' -ForegroundColor Cyan
