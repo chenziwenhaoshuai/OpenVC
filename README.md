@@ -87,15 +87,14 @@
 
 ## 从源码构建
 
-需要 Python 3.11、Rust（仅编译降噪库）、mingw-w64。
+需要 Python 3.11（只有想重新编译降噪库时才需要 Rust + mingw-w64）。
 
 ```powershell
 git clone https://github.com/chenziwenhaoshuai/OpenVC
 cd OpenVC
 
 powershell -ExecutionPolicy Bypass -File .\setup.ps1           # 建 venv + 装依赖
-powershell -ExecutionPolicy Bypass -File .\download_models.ps1  # ONNX 变声模型
-powershell -ExecutionPolicy Bypass -File .\build_denoise.ps1    # 编译降噪库
+powershell -ExecutionPolicy Bypass -File .\download_models.ps1  # ONNX 变声模型（70 MB）
 
 python app\main_qt.py
 
@@ -123,7 +122,7 @@ OpenVC/
 ├─ voices/                 内置音色
 ├─ build_portable.ps1      打包程序
 ├─ make_release.ps1        组装带驱动的发布包
-├─ build_denoise.ps1       编译降噪库
+├─ build_denoise.ps1       重新编译降噪库（可选，仓库已含 df.dll）
 ├─ download_models.ps1     下载 ONNX 模型
 └─ setup.ps1               源码环境安装
 ```

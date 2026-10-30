@@ -6,10 +6,9 @@ __pycache__/
 *.pyc
 *.res
 
-# 模型与二进制（用 download_models.ps1 / build_denoise.ps1 生成）
+# 模型（用 download_models.ps1 生成）
+# 降噪库 denoise/df.dll 与模型直接提交，clone 即可用
 onnx/
-denoise/df.dll
-denoise/DeepFilterNet3_onnx.tar.gz
 packaging/python-embed.zip
 
 # 运行期状态

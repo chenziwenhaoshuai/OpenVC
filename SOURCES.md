@@ -42,7 +42,8 @@ OpenVC 自己不含任何模型。下面每一个文件都是从别人那里下�
 
 **源码**：<https://github.com/Rikorose/DeepFilterNet>（tarball：`https://codeload.github.com/Rikorose/DeepFilterNet/tar.gz/refs/heads/main`，约 92 MB）
 **模型**：官方仓库内 `models/DeepFilterNet3_onnx.tar.gz`
-**获取**：`powershell -ExecutionPolicy Bypass -File .\build_denoise.ps1`
+**获取**：已随仓库提供（`denoise/`），clone 即可用；想自己重编用
+`powershell -ExecutionPolicy Bypass -File .\build_denoise.ps1`
 **许可证**：MIT / Apache-2.0
 
 编译命令（官方文档写法）：
