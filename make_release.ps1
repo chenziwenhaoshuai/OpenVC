@@ -90,4 +90,15 @@ if ($Zip) {
     Write-Host '=== 压缩 ===' -ForegroundColor Cyan
     Compress-Archive -Path $rel -DestinationPath $zipPath -CompressionLevel Optimal
     Write-Host ("   {0}  ({1:N0} MB)" -f $zipPath, ((Get-Item $zipPath).Length/1MB)) -ForegroundColor Green
+
+    # 发布说明（含校验值），模板在 packaging/release-notes.md
+    $tpl = Join-Path $root 'packaging\release-notes.md'
+    if (Test-Path $tpl) {
+        $hash = (Get-FileHash $zipPath -Algorithm SHA256).Hash
+        $text = [System.IO.File]::ReadAllText($tpl, [System.Text.Encoding]::UTF8)
+        $text = $text.Replace('__SHA256__', $hash).Replace('__VERSION__', $Version)
+        $outNotes = Join-Path $root "release\OpenVC-$Version-notes.md"
+        [System.IO.File]::WriteAllText($outNotes, $text, (New-Object System.Text.UTF8Encoding($true)))
+        Write-Host ("   发布说明: {0}" -f $outNotes)
+    }
 }
